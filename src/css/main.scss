@@ -1,0 +1,97 @@
+@import "helper/fonts";
+
+*{
+    //font-family: 'Open Sans', Arial, sans-serif;
+    //  font-family: 'Techno Agony';
+    //font-family: 'Aliens & Cows';
+    //font-family: 'Hugh Me';
+    //font-family: 'Vermin';
+    font-family: 'San Francisco';
+    //font-family: 'Capsule';
+}
+
+.black-background{
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
+
+body{
+  margin: 0;
+}
+
+nav{
+  position: fixed;
+  top:0;
+  left: 0;
+  background: rgba(0,0,0,0.75);
+  height: 70px;
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  p{
+    color: white;
+    margin-left: 10px;
+    font:{
+      family: 'Aliens & Cows';
+      size:60px;
+    }
+  }
+  img{
+    height: 50px;
+    margin-left: 50px;
+  }
+}
+
+.navigation-menu{
+  padding: 0 0 70px 0;
+  box-sizing: border-box;
+  position: fixed;
+  left:0;
+  top: 70px;
+  height: 100%;
+  width: 70px;
+  background: rgba(0,0,0,0.75);
+}
+
+/*
+Font type: Open Type PS
+Weight: 500
+Font styles: Medium
+*/
+
+.nav-button{
+  color: white;
+  font-weight: 200;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 10px 5px;
+  height: 50%;
+  cursor: pointer;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  flex-direction: column;
+
+  &:hover{
+    transition: .5s;
+    background: #333333;
+    p, img{
+      transform: scale(1.2);
+      transition: .3s;
+    }
+  }
+
+  p{
+    margin: auto auto 5px auto;
+    font-size: 18px;
+  }
+
+  img{
+    height: 30px;
+    margin: 5px auto auto auto;
+  }
+}
