@@ -115,8 +115,28 @@ angular.module('vavapp', [])
      data.addColumn('string', 'Dependencies');
      var options = {
        height:400,
+       colors: ['#a4c662','#006e5e', '#42915f', '#093'],
+       backgroundColor: {
+         fill: "rgba(0,0,0,0)"
+       },
        gantt: {
-         trackHeight: 30
+         trackHeight: 30,
+         fill: 'rgba(0,0,0,0)',
+         innerGridDarkTrack: {fill: 'rgba(0,0,0,0)'},
+         innerGridHorizLine: {
+           stroke: 'rgba(0,0,0,0)',
+           fill: ' rgba(0,0,0,0)'
+         },
+         innerGridTrack:{
+           fill: "#000"
+         },
+         shadowColor: 'rgba(0,0,0,0)',
+         criticalPathStyle:{ stroke: '#a4c662'}
+       },
+       labelStyle: {
+         fontSize: 14,
+         color: 'white',
+         background: "rgba(0,0,0,0)"
        }
      };
 
