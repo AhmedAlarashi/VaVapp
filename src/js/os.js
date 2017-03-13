@@ -20,7 +20,7 @@ while (i < processes.length) {
         context_switches += 1
         console.log("time process executed: " + quantum);
         execution_time += quantum;
-        execution_time += context_switch;
+        execution_time += context_switch; //?
         console.log("execution time " + String(execution_time));
         processes.push(remain_time);
     }

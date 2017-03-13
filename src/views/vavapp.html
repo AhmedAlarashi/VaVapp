@@ -1,6 +1,7 @@
 <html ng-app="vavapp" >
 <meta charset="UTF-8">
   <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
 
  <script src="../js/ctrl.js"></script>
@@ -32,7 +33,8 @@
 
       <div class="process-list">
         <p class="create-p">Create a Process</p>
-        <input type="number"ng-model="quantum" ng-show="title=='Round-Robin'" placeholder="Insert quantum">
+        <input type="number" ng-model="quantum" ng-show="title=='Round-Robin'" placeholder="Quantum">
+        <input type="number" ng-model="contextSwitch" ng-show="title=='Round-Robin'" placeholder="Context switch">
         <div class="titles-cont" ng-show="processNumber>1">
           <p class="green">Process</p>
           <p class="green">Burst time</p>
@@ -48,9 +50,11 @@
  <input ng-model="addNewProcess" placeholder="Insert burst time">
     <button class="green-btn" ng-click="addProcess()">+</button>
     <button class="go-btn" ng-click="fcfsAlg()" ng-show="title=='First Come First Served'">Go</button>
-    <button class="go-btn" ng-click="" ng-show="title=='Round-Robin'">Go</button>
+    <button class="go-btn" ng-click="roundRobin()" ng-show="title=='Round-Robin'">Go</button>
     <p class="error">{{errortext}}</p>
       </div>
+
+       <div id="chart_div"></div>
 
       <div ng-show="showResults" class="flex-cont absolute results">
 

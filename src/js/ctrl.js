@@ -30,6 +30,58 @@ angular.module('vavapp', [])
        $scope.errortext = "";
    }
 
+   $scope.roundRobin = function (){
+
+     if($scope.process.length==0){
+       $scope.errortext = "You must create process.";
+       return;
+     }
+
+    var execution_time = 0;
+    var context_switches = 0;
+    $scope.errortext = "";
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Task ID');
+    data.addColumn('string', 'Task Name');
+    data.addColumn('string', 'Resource');
+    data.addColumn('date', 'Start Date');
+    data.addColumn('date', 'End Date');
+    data.addColumn('number', 'Duration');
+    data.addColumn('number', 'Percent Complete');
+    data.addColumn('string', 'Dependencies');
+    var options = {
+      height:400,
+      gantt: {
+        trackHeight: 30
+      }
+    };
+
+
+    var processes = $scope.process;
+    var prevProcess = null;
+    var i=0;
+    while(i<processes.length){
+      if (processes[i].num<=$scope.quantum){
+        execution_time+=processes[i].num;
+        data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null,eval(processes[i].num)*100, 100, prevProcess]]);
+      }
+      else{
+        context_switches++;
+        execution_time+= ($scope.quantum+$scope.contextSwitch);
+          data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
+          processes.push[{id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)}];
+      }
+      prevProcess=processes[i].id;
+      i++;
+      }
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+      chart.draw(data, options);
+
+     }
+
+
+
    $scope.fcfsAlg = function(){
      var partialturn = 0;
      $scope.totalWaitTime = 0;
@@ -56,16 +108,10 @@ angular.module('vavapp', [])
    }
 });
 
+google.charts.load('current', {'packages':['gantt']});
+google.charts.setOnLoadCallback(drawChart);
 
-24
-3
-3
+function drawChart() {
 
 
-24+27+30
-
-0+24
-
-    24+3
-
-         27+3
+}
