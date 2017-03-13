@@ -18,17 +18,17 @@
   </div>
 
       <nav>
-        <img src="../../img/tyrannosaurus-rex.svg">
-        <p>VaVapp</p>
-        <p class="a-title">{{title}}</p>
+        <img ng-click="playSound()" src="../../img/tyrannosaurus-rex.svg">
+        <p ng-click="playSound()">VaVapp</p>
+        <p  ng-click="playSound()" class="a-title">{{title}}</p>
       </nav>
 
       <div class="navigation-menu">
-        <div class="nav-button" ng-click="title='Round-Robin'">
+        <div class="nav-button" ng-click="clear('Round-Robin')">
           <p>Round Robin</p>
           <img src="../../img/timer.svg">
         </div>
-        <div class="nav-button" ng-click="title='First Come First Served'">
+        <div class="nav-button" ng-click="clear('First Come First Served')">
           <p>FCFS</p>
           <img src="../../img/chart-gantt.svg">
         </div>
