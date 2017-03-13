@@ -5,6 +5,7 @@ angular.module('vavapp', [])
     $scope.process = [];
      $scope.title = "Round-Robin";
     $scope.showResults = false;
+    $scope.rrResults = false;
 
     $scope.addProcess = function () {
 
@@ -31,9 +32,11 @@ angular.module('vavapp', [])
    }
 
    $scope.roundRobin = function (){
+      $scope.showResults = false;
 
      if($scope.process.length==0){
        $scope.errortext = "You must create process.";
+       $scope.rrResults = false;
        return;
      }
 
@@ -78,6 +81,11 @@ angular.module('vavapp', [])
       var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
       chart.draw(data, options);
 
+      $scope.turnaround = execution_time;
+      $scope.avgTurnaroudTime = execution_time / $scope.process.lenght;
+      $scope.contextSwitchNum = context_switches;
+      $scope.rrResults=true;
+
      }
 
 
@@ -85,21 +93,44 @@ angular.module('vavapp', [])
    $scope.fcfsAlg = function(){
      var partialturn = 0;
      $scope.totalWaitTime = 0;
+     $scope.rrResults = false;
      $scope.waitTime = 0;
      $scope.avgWaitTime = 0;
      $scope.turnaround = 0;
      $scope.avgTurnaroudTime = 0;
      $scope.throughput = 0;
+
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'Task ID');
+     data.addColumn('string', 'Task Name');
+     data.addColumn('string', 'Resource');
+     data.addColumn('date', 'Start Date');
+     data.addColumn('date', 'End Date');
+     data.addColumn('number', 'Duration');
+     data.addColumn('number', 'Percent Complete');
+     data.addColumn('string', 'Dependencies');
+     var options = {
+       height:400,
+       gantt: {
+         trackHeight: 30
+       }
+     };
+
      if($scope.process.length<1){
        $scope.errortext = "You must create a process.";
         $scope.showResults = false;
        return;
      }
+     var prevProcess = null;
      for (var i = 0; i < $scope.process.length; i++) {
          $scope.totalWaitTime += partialturn;
          $scope.turnaround += (partialturn+eval($scope.process[i].num));
+        data.addRows([[$scope.process[i].id, $scope.process[i].id, $scope.process[i].id, null, null, eval($scope.process[i].num)*100, 100, prevProcess]]);
          partialturn += eval($scope.process[i].num);
+         prevProcess = $scope.process[i].id;
      }
+     var chart = new google.visualization.Gantt(document.getElementById('fcfs_chart'));
+     chart.draw(data, options);
      $scope.avgWaitTime = Math.floor($scope.totalWaitTime/$scope.process.length);
      $scope.avgTurnaroudTime = Math.floor($scope.turnaround/$scope.process.length);
      $scope.throughput = ($scope.process.length/ partialturn).toFixed(2);

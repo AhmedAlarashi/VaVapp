@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="../css/main.min.css">
 
     <div class=" photos-background" ng-controller="vavappCtrl">
+      <div class="bg">
+      </div>
 <div class="black-background">
   </div>
+
       <nav>
         <img src="../../img/tyrannosaurus-rex.svg">
         <p>VaVapp</p>
@@ -30,6 +33,9 @@
           <img src="../../img/chart-gantt.svg">
         </div>
       </div>
+      <div class="flex-cont main">
+
+
 
       <div class="process-list">
         <p class="create-p">Create a Process</p>
@@ -54,9 +60,10 @@
     <p class="error">{{errortext}}</p>
       </div>
 
-       <div id="chart_div"></div>
+       <div ng-show="rrResults" id="chart_div"></div>
+       <div ng-show="showResults" id="fcfs_chart"></div>
 
-      <div ng-show="showResults" class="flex-cont absolute results">
+      <div ng-show="showResults" class="flex-cont results">
 
         <div class="result-cont">
           <div class="blur">
@@ -90,9 +97,30 @@
         </div>
       </div>
 
+      <div ng-show="rrResults" class="flex-cont results">
+        <div class="result-cont">
+          <div class="blur">
+          </div>
+          <p class="num">{{turnaround}}<span class="unit">ms</span></p>
+          <p class="label">Total Turnaround Time</p>
+        </div>
+        <div class="result-cont">
+          <div class="blur">
+          </div>
+          <p class="num">{{avgTurnaroudTime}}<span class="unit">ms</span></p>
+          <p class="label">Average Turnaround Time</p>
+        </div>
+        <div class="result-cont">
+          <div class="blur">
+          </div>
+          <p class="num">{{contextSwitchNum}}<span class="unit">times</span></p>
+          <p class="label">Context Switch</p>
+        </div>
+      </div>
 
 
 
+</div>
     </div>
 
 
