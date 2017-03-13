@@ -4,12 +4,12 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
 
- <script src="../js/ctrl.js"></script>
+ <script src="src/js/ctrl.js"></script>
   </head>
 <body>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.min.css">
+    <link rel="stylesheet" href="src/css/main.min.css">
 
     <div class=" photos-background" ng-controller="vavappCtrl">
       <div class="bg">
@@ -18,7 +18,7 @@
   </div>
 
       <nav>
-        <img src="../../img/tyrannosaurus-rex.svg">
+        <img src="img/tyrannosaurus-rex.svg">
         <p>VaVapp</p>
         <p class="a-title">{{title}}</p>
       </nav>
@@ -26,11 +26,11 @@
       <div class="navigation-menu">
         <div class="nav-button" ng-click="title='Round-Robin'">
           <p>Round Robin</p>
-          <img src="../../img/timer.svg">
+          <img src="img/timer.svg">
         </div>
         <div class="nav-button" ng-click="title='First Come First Served'">
           <p>FCFS</p>
-          <img src="../../img/chart-gantt.svg">
+          <img src="img/chart-gantt.svg">
         </div>
       </div>
       <div class="flex-cont main">
