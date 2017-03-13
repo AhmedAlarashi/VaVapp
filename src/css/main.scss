@@ -14,16 +14,24 @@
   background: rgba(0,0,0,0.8);
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
 }
 
 .photos-background{
   position: absolute;
-  z-index: 0;
-  background: url('../../img/codebg.jpg') no-repeat center fixed;
-  background-size: cover;
+
+
   width: 100%;
     height: 100%;
+}
+
+.bg{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url('../../img/codebg.jpg') no-repeat center fixed;
+  background-size: cover;
+  z-index: 0;
 }
 
 body{
@@ -32,6 +40,7 @@ body{
 
 nav{
   position: fixed;
+  z-index: 1000;
   top:0;
   left: 0;
   background: rgba(0,0,0,0.75);
@@ -48,18 +57,30 @@ nav{
       family: 'Aliens & Cows';
       size:60px;
     }
+    @media screen and (max-width: 500px){
+      font-size: 50px;
+      margin-left: 5px;
+    }
   }
   img{
     height: 50px;
     margin-left: 50px;
+
+    @media screen and (max-width: 500px){
+      margin-left: 5px;
+    }
   }
 }
 
 .a-title{
   font-size: 40px;
   color: #009933;
-  //color: #00cc44;
-  margin: auto 30px 15px auto;
+  margin: auto 25px 15px auto;
+  width: auto;
+  text-align: right;
+  @media screen and (max-width: 500px){
+  font-size: 25px;
+  }
 }
 
 .navigation-menu{
@@ -91,18 +112,25 @@ Font styles: Medium
   align-items: center;
   width: 100%;
   height:auto;
+  flex-direction: column;
 
+  &.main{
+  height: 100%;
+    padding-left: 70px;
+width: 100%;
+box-sizing: border-box;
+  }
 
-
-  &.absolute{
-    position: absolute;
 
     &.results{
-      padding-left: 70px;
+      margin: auto auto 30px auto;
       box-sizing: border-box;
       bottom: 30px;
+      height: auto;
+          flex-direction: row;
+
     }
-  }
+
 }
 
 .titles-cont{
@@ -257,16 +285,17 @@ padding: 0 15px 5px 15px;
 
 .result-cont{
   position: relative;
-  flex-basis: 100%;
   display: -webkit-flex;
   display: flex;
   -webkit-align-items: center;
   align-items: center;
   border-right: 1px solid #333333;
-  height: 100%;
+  height: auto;
   z-index: 1;
   text-align: center;
   flex-direction: column;
+  flex-basis: 0;
+  flex-grow: 1;
 
   .label{
     text-transform:capitalize;
