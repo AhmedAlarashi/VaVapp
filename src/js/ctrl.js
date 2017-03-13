@@ -86,8 +86,28 @@ angular.module('vavapp', [])
     data.addColumn('string', 'Dependencies');
     var options = {
       height:400,
+      colors: ['#a4c662','#006e5e', '#42915f', '#093'],
+      backgroundColor: {
+        fill: "rgba(0,0,0,0)"
+      },
       gantt: {
-        trackHeight: 30
+        trackHeight: 30,
+        fill: 'rgba(0,0,0,0)',
+        innerGridDarkTrack: {fill: 'rgba(0,0,0,0)'},
+        innerGridHorizLine: {
+          stroke: 'rgba(0,0,0,0)',
+          fill: ' rgba(0,0,0,0)'
+        },
+        innerGridTrack:{
+          fill: "#000"
+        },
+        shadowColor: 'rgba(0,0,0,0)',
+        criticalPathStyle:{ stroke: '#a4c662'}
+      },
+      labelStyle: {
+        fontSize: 14,
+        color: 'white',
+        background: "rgba(0,0,0,0)"
       }
     };
 
@@ -125,6 +145,10 @@ angular.module('vavapp', [])
 
    $scope.fcfsAlg = function(){
      var partialturn = 0;
+     var processes = $scope.process;
+
+     var prevProcess = null;
+
      $scope.totalWaitTime = 0;
      $scope.rrResults = false;
      $scope.waitTime = 0;
@@ -144,8 +168,28 @@ angular.module('vavapp', [])
      data.addColumn('string', 'Dependencies');
      var options = {
        height:400,
+       colors: ['#a4c662','#006e5e', '#42915f', '#093'],
+       backgroundColor: {
+         fill: "rgba(0,0,0,0)"
+       },
        gantt: {
-         trackHeight: 30
+         trackHeight: 30,
+         fill: 'rgba(0,0,0,0)',
+         innerGridDarkTrack: {fill: 'rgba(0,0,0,0)'},
+         innerGridHorizLine: {
+           stroke: 'rgba(0,0,0,0)',
+           fill: ' rgba(0,0,0,0)'
+         },
+         innerGridTrack:{
+           fill: "#000"
+         },
+         shadowColor: 'rgba(0,0,0,0)',
+         criticalPathStyle:{ stroke: '#a4c662'}
+       },
+       labelStyle: {
+         fontSize: 14,
+         color: 'white',
+         background: "rgba(0,0,0,0)"
        }
      };
 
@@ -168,6 +212,8 @@ angular.module('vavapp', [])
      $scope.avgTurnaroudTime = Math.floor($scope.turnaround/$scope.process.length);
      $scope.throughput = ($scope.process.length/ partialturn).toFixed(2);
      $scope.errortext = "";
+     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+     chart.draw(data, options);
      $scope.showResults = true;
    }
 });
