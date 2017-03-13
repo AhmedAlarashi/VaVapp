@@ -84,6 +84,10 @@ angular.module('vavapp', [])
 
    $scope.fcfsAlg = function(){
      var partialturn = 0;
+     var processes = $scope.process;
+     
+     var prevProcess = null;
+
      $scope.totalWaitTime = 0;
      $scope.waitTime = 0;
      $scope.avgWaitTime = 0;
@@ -95,15 +99,36 @@ angular.module('vavapp', [])
         $scope.showResults = false;
        return;
      }
+
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'Task ID');
+     data.addColumn('string', 'Task Name');
+     data.addColumn('string', 'Resource');
+     data.addColumn('date', 'Start Date');
+     data.addColumn('date', 'End Date');
+     data.addColumn('number', 'Duration');
+     data.addColumn('number', 'Percent Complete');
+     data.addColumn('string', 'Dependencies');
+     var options = {
+       height:400,
+       gantt: {
+         trackHeight: 30
+       }
+     };
+
      for (var i = 0; i < $scope.process.length; i++) {
          $scope.totalWaitTime += partialturn;
          $scope.turnaround += (partialturn+eval($scope.process[i].num));
+         data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null,eval(processes[i].num)*100, 100, prevProcess]]);
          partialturn += eval($scope.process[i].num);
+         prevProcess=processes[i].id;
      }
      $scope.avgWaitTime = Math.floor($scope.totalWaitTime/$scope.process.length);
      $scope.avgTurnaroudTime = Math.floor($scope.turnaround/$scope.process.length);
      $scope.throughput = ($scope.process.length/ partialturn).toFixed(2);
      $scope.errortext = "";
+     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+     chart.draw(data, options);
      $scope.showResults = true;
    }
 });
