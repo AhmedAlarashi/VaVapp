@@ -1,24 +1,5 @@
 var processes = [3, 2, 1, 4, 2, 8];
 
-//First Come First Served.
-var fcfs_execution = 0;
-var fcfs_turnaround = 0;
-var fcfs_wait_time = 0;
-var fcfs_avg_wait = 0;
-
-for (var i = 0; i < processes.length; i++) {
-    if (i > 0) {
-        fcfs_wait_time += processes[i - 1];
-    }
-    fcfs_execution += processes[i];
-    console.log("Wait time = " + fcfs_wait_time);
-}
-
-fcfs_turnaround = fcfs_execution / processes.length;
-fcfs_avg_wait = fcfs_wait_time / processes.length;
-console.log("FCFS average turnaround = " + fcfs_turnaround);
-console.log("FCFS average waiting time = " + fcfs_avg_wait);
-
 //Round-Robin.
 var quantum = 4;
 var num_processes = processes.length;
