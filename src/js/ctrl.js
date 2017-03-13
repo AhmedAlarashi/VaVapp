@@ -1,6 +1,8 @@
 angular.module('vavapp', [])
   .controller('vavappCtrl',function($scope) {
 
+
+
     $scope.processNumber = 1;
     $scope.errortext = "";
     $scope.process = [];
@@ -13,6 +15,7 @@ angular.module('vavapp', [])
       $scope.showResults = false;
       $scope.rrResults = false;
       $scope.process = [];
+      $scope.processNumber = 1;
       $scope.errortext = "";
     }
 
@@ -102,7 +105,9 @@ angular.module('vavapp', [])
         execution_time+= ($scope.quantum+$scope.contextSwitch);
           data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
           processes.push[{id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)}];
+
       }
+      console.log("The lenght: "+processes.length);
       prevProcess=processes[i].id;
       i++;
       }
@@ -110,7 +115,7 @@ angular.module('vavapp', [])
       chart.draw(data, options);
 
       $scope.turnaround = execution_time;
-      $scope.avgTurnaroudTime = execution_time / $scope.process.length;
+      $scope.avgTurnaroudTime = (execution_time / $scope.process.length).toFixed(2);
       $scope.contextSwitchNum = context_switches;
       $scope.rrResults=true;
 
@@ -170,7 +175,4 @@ angular.module('vavapp', [])
 google.charts.load('current', {'packages':['gantt']});
 google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
-
-
-}
+function drawChart() {}
