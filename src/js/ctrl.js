@@ -1,11 +1,28 @@
 angular.module('vavapp', [])
   .controller('vavappCtrl',function($scope) {
+
+
+
     $scope.processNumber = 1;
     $scope.errortext = "";
     $scope.process = [];
      $scope.title = "Round-Robin";
     $scope.showResults = false;
     $scope.rrResults = false;
+
+    $scope.clear = function(title){
+      $scope.title = title;
+      $scope.showResults = false;
+      $scope.rrResults = false;
+      $scope.process = [];
+      $scope.processNumber = 1;
+      $scope.errortext = "";
+    }
+
+    $scope.playSound = function(){
+      var sounds = [new Audio('../../audio/Vavapp.mp3'), new Audio('../../audio/Have Fun.mp3')];
+      sounds[Math.round(Math.random())].play();
+    }
 
     $scope.addProcess = function () {
 
@@ -32,11 +49,25 @@ angular.module('vavapp', [])
    }
 
    $scope.roundRobin = function (){
+
       $scope.showResults = false;
+      $scope.rrResults = false;
 
      if($scope.process.length==0){
        $scope.errortext = "You must create process.";
-       $scope.rrResults = false;
+
+       return;
+     }
+
+     if(isNaN($scope.quantum)){
+       $scope.errortext = "You must insert a quantum.";
+
+       return;
+     }
+
+     if(isNaN($scope.contextSwitch)){
+       $scope.errortext = "You must insert a context switch value.";
+
        return;
      }
 
@@ -94,7 +125,9 @@ angular.module('vavapp', [])
         execution_time+= ($scope.quantum+$scope.contextSwitch);
           data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
           processes.push[{id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)}];
+
       }
+      console.log("The lenght: "+processes.length);
       prevProcess=processes[i].id;
       i++;
       }
@@ -102,7 +135,7 @@ angular.module('vavapp', [])
       chart.draw(data, options);
 
       $scope.turnaround = execution_time;
-      $scope.avgTurnaroudTime = execution_time / $scope.process.lenght;
+      $scope.avgTurnaroudTime = (execution_time / $scope.process.length).toFixed(2);
       $scope.contextSwitchNum = context_switches;
       $scope.rrResults=true;
 
@@ -188,7 +221,4 @@ angular.module('vavapp', [])
 google.charts.load('current', {'packages':['gantt']});
 google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
-
-
-}
+function drawChart() {}
