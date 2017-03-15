@@ -19,7 +19,7 @@ angular.module('vavapp', [])
     }
 
     $scope.playSound = function(){
-      var sounds = [new Audio('../../audio/Vavapp.mp3'), new Audio('../../audio/Have Fun.mp3')];
+      var sounds = [new Audio('audio/Vavapp.mp3'), new Audio('audio/Have Fun.mp3')];
       sounds[Math.round(Math.random())].play();
     }
 
@@ -47,8 +47,25 @@ angular.module('vavapp', [])
        $scope.errortext = "";
    }
 
+   var drawGraph = function(id, width, color, init,end){
+     var myEl = angular.element( document.querySelector( '#graph' ) );
+     width = width * 30;
+     myEl.append('<div class="block-cont"><div style="background:'+color+'; width:'+width+'px" class="graph-block"><p>'+id+'</p><div/><p class="tooltiptext left">'+init+'</p><p class="tooltiptext right">'+end+'</p><div>');
+   }
+
+   function eraseGraph() {
+     angular.element( document.querySelector( '#graph' ) ).empty();
+
+   }
+
+   function random_color() {
+     var color = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+    return color;
+}
+
    $scope.roundRobin = function (){
       //$scope.showResults = false;
+      eraseGraph();
 
      if($scope.process.length==0){
        $scope.errortext = "You must create process.";
@@ -79,7 +96,7 @@ angular.module('vavapp', [])
     data.addColumn('number', 'Percent Complete');
     data.addColumn('string', 'Dependencies');
     var options = {
-      height:400,
+      height:300,
       colors: ['#a4c662','#006e5e', '#42915f', '#093'],
       backgroundColor: {
         fill: "rgba(0,0,0,0)"
@@ -110,37 +127,36 @@ angular.module('vavapp', [])
     var j;
     for(j =0; j<$scope.process.length; j++){
       processes[j]=$scope.process[j];
-      console.log(processes[j]);
+      processes[j].color = random_color();
     }
     var prevProcess = null;
     var i=0;
     while(i<processes.length){
-      console.log("La lista mide: "+processes.length);
-      console.log("Y esta es mi: "+i+" vez");
       if(i>0){
         context_switches++;
         execution_time+=$scope.contextSwitch;
       }
       if (processes[i].num<=$scope.quantum){
+        drawGraph(processes[i].id, eval(processes[i].num), processes[i].color,execution_time,execution_time+eval(processes[i].num));
         execution_time+=eval(processes[i].num);
-        data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null,eval(processes[i].num)*100, 100, prevProcess]]);
+      //  data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null,eval(processes[i].num)*100, 100, prevProcess]]);
       }
       else{
+        drawGraph(processes[i].id, $scope.quantum, processes[i].color, execution_time,execution_time+$scope.quantum);
         execution_time+= ($scope.quantum);
-          data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
-          processes.push({id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)});
+    //      data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
+          processes.push({id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum), color:processes[i].color});
+
       }
       prevProcess=processes[i].id;
       i++;
       }
-      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-      chart.draw(data, options);
+  //    var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+  //    chart.draw(data, options);
       $scope.turnaround = execution_time;
       $scope.avgTurnaroudTime = (execution_time / $scope.process.length).toFixed(2);
       $scope.contextSwitchNum = context_switches;
       $scope.rrResults=true;
-      console.log("DOne");
-      console.log("Data: "+data);
      }
 
 

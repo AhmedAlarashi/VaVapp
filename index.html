@@ -60,10 +60,18 @@
     <p class="error">{{errortext}}</p>
       </div>
 
+      <div class="graph-cont" ng-show="rrResults">
+        <p class="create-p">Gantt Chart</p>
+        <div id="graph">
+
+        </div>
+     </div>
+
        <div ng-show="rrResults" id="chart_div"></div>
        <div ng-show="showResults" id="fcfs_chart"></div>
 
-      <div ng-show="showResults" class="flex-cont results">
+
+      <div ng-show="showResults" class="results">
 
         <div class="result-cont">
           <div class="blur">
@@ -97,7 +105,7 @@
         </div>
       </div>
 
-      <div ng-show="rrResults" class="flex-cont results">
+      <div ng-show="rrResults" class="results">
         <div class="result-cont">
           <div class="blur">
           </div>
