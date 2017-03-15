@@ -1,13 +1,7 @@
 @import "helper/fonts";
 
 *{
-    //font-family: 'Open Sans', Arial, sans-serif;
-    //  font-family: 'Techno Agony';
-    //font-family: 'Aliens & Cows';
-    //font-family: 'Hugh Me';
-    //font-family: 'Vermin';
     font-family: 'San Francisco';
-    //font-family: 'Capsule';
 }
 
 .black-background{
@@ -102,12 +96,6 @@ nav{
   }
 }
 
-/*
-Font type: Open Type PS
-Weight: 500
-Font styles: Medium
-*/
-
 .flex-cont{
   display: -webkit-flex;
   display: flex;
@@ -159,6 +147,10 @@ box-sizing: border-box;
       padding: 10px 0 0 0;
 }
 
+#fcfs_chart, #chart_div{
+
+}
+
 .process-list{
   background-color: rgba(0,0,0,0.3);
   border-radius: 15px;
@@ -167,9 +159,7 @@ padding: 0 15px 5px 15px;
     position: relative;
   text-align: center;
   max-width: 200px;
-    margin: auto;
-    margin-top: 100px;
-
+    margin: 100px auto 150px auto;
 
     .green{
       color: #009933;

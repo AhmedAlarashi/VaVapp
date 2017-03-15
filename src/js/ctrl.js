@@ -1,8 +1,5 @@
 angular.module('vavapp', [])
   .controller('vavappCtrl',function($scope) {
-
-
-
     $scope.processNumber = 1;
     $scope.errortext = "";
     $scope.process = [];
@@ -17,6 +14,8 @@ angular.module('vavapp', [])
       $scope.process = [];
       $scope.processNumber = 1;
       $scope.errortext = "";
+      $scope.quantum = "";
+      $scope.contextSwitch = "";
     }
 
     $scope.playSound = function(){
@@ -49,25 +48,20 @@ angular.module('vavapp', [])
    }
 
    $scope.roundRobin = function (){
-
-      $scope.showResults = false;
-      $scope.rrResults = false;
+      //$scope.showResults = false;
 
      if($scope.process.length==0){
        $scope.errortext = "You must create process.";
-
        return;
      }
 
      if(isNaN($scope.quantum)){
        $scope.errortext = "You must insert a quantum.";
-
        return;
      }
 
      if(isNaN($scope.contextSwitch)){
        $scope.errortext = "You must insert a context switch value.";
-
        return;
      }
 
@@ -112,33 +106,41 @@ angular.module('vavapp', [])
     };
 
 
-    var processes = $scope.process;
+    var processes = [];
+    var j;
+    for(j =0; j<$scope.process.length; j++){
+      processes[j]=$scope.process[j];
+      console.log(processes[j]);
+    }
     var prevProcess = null;
     var i=0;
     while(i<processes.length){
+      console.log("La lista mide: "+processes.length);
+      console.log("Y esta es mi: "+i+" vez");
+      if(i>0){
+        context_switches++;
+        execution_time+=$scope.contextSwitch;
+      }
       if (processes[i].num<=$scope.quantum){
-        execution_time+=processes[i].num;
+        execution_time+=eval(processes[i].num);
         data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null,eval(processes[i].num)*100, 100, prevProcess]]);
       }
       else{
-        context_switches++;
-        execution_time+= ($scope.quantum+$scope.contextSwitch);
+        execution_time+= ($scope.quantum);
           data.addRows([[processes[i].id, processes[i].id, processes[i].id, null, null, $scope.quantum*100, 100, prevProcess]]);
-          processes.push[{id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)}];
-
+          processes.push({id:processes[i].id, num:(eval(processes[i].num)-$scope.quantum)});
       }
-      console.log("The lenght: "+processes.length);
       prevProcess=processes[i].id;
       i++;
       }
       var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
       chart.draw(data, options);
-
       $scope.turnaround = execution_time;
       $scope.avgTurnaroudTime = (execution_time / $scope.process.length).toFixed(2);
       $scope.contextSwitchNum = context_switches;
       $scope.rrResults=true;
-
+      console.log("DOne");
+      console.log("Data: "+data);
      }
 
 
@@ -146,9 +148,7 @@ angular.module('vavapp', [])
    $scope.fcfsAlg = function(){
      var partialturn = 0;
      var processes = $scope.process;
-
      var prevProcess = null;
-
      $scope.totalWaitTime = 0;
      $scope.rrResults = false;
      $scope.waitTime = 0;
@@ -212,13 +212,11 @@ angular.module('vavapp', [])
      $scope.avgTurnaroudTime = Math.floor($scope.turnaround/$scope.process.length);
      $scope.throughput = ($scope.process.length/ partialturn).toFixed(2);
      $scope.errortext = "";
-     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-     chart.draw(data, options);
      $scope.showResults = true;
+
    }
 });
 
 google.charts.load('current', {'packages':['gantt']});
 google.charts.setOnLoadCallback(drawChart);
-
 function drawChart() {}
